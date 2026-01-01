@@ -1,0 +1,36 @@
+# Dependencies
+/node_modules
+
+# Next.js
+/.next/
+/out/
+/build
+
+# Environment Variables
+.env
+.env.*
+
+# Logs
+npm-debug.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Editor
+.vscode/
+
+# Generated PWA files
+/public/sw.js
+/public/workbox-*.js
+/public/worker-*.js
+
+# Large Media
+/public/recap.mp4
+
+# Temp
+tmp/

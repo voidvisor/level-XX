@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Agent {
+  id             String             @id @default(cuid())
+  realName       String             @default("")
+  codename       String             @unique
+  status         Status             @default(PENDING)
+  transportMode  String?
+  pickupLocation String?
+  vote           String?
+  pizzaVote      String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  subscriptions  PushSubscription[]
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique @db.VarChar(500)
+  keys      Json
+  agentId   String?
+  agent     Agent?   @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SystemState {
+  id                String   @id @default(cuid())
+  currentStage      Int      @default(0)
+  isVotingOpen      Boolean  @default(false)
+  showBombManual    Boolean  @default(false)
+  showPizzaMenu     Boolean  @default(false)
+  isPizzaVotingOpen Boolean  @default(false)
+  updatedAt         DateTime @updatedAt
+}
+
+enum Status {
+  PENDING
+  CONFIRMED
+  MIA
+}

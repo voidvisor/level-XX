@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  mission-interface:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_VAPID_PUBLIC_KEY: <YOUR_PUBLIC_KEY>
+        NEXT_PUBLIC_BASE_URL: https://your-domain.com
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=mysql://user:password@host.docker.internal:3306/mission_control
+      - DATABASE_HOST=host.docker.internal
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=mission_control
+      - ADMIN_PIN=123456
+      - NEXT_PUBLIC_BASE_URL=https://your-domain.com
+      - NEXT_PUBLIC_VAPID_PUBLIC_KEY=<YOUR_PUBLIC_KEY>
+      - VAPID_PRIVATE_KEY=<YOUR_PRIVATE_KEY>
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
